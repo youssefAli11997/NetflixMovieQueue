@@ -16,6 +16,8 @@ class DoublyLinkedList
 
 public:
 	DoublyLinkedList();
+	DoublyLinkedList(const DoublyLinkedList &list);
+	DoublyLinkedList& operator=(const DoublyLinkedList& list);
 	~DoublyLinkedList();
 	void add(T data);
 	T get(int index);
@@ -24,6 +26,7 @@ public:
 	int search(T data);
 	void printAll();
 	void printAllReversed();
+	void clear();
 
 private:
 	Node<T> * first;
@@ -41,9 +44,38 @@ DoublyLinkedList<T>::DoublyLinkedList()
 	this->last = nullptr;
 }
 
+template<class T>
+DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList & list)
+{
+	Node<T> * current = list.first;
+	while (current != nullptr) {
+		this->add(current->data);
+	}
+}
+
+template<class T>
+DoublyLinkedList<T> & DoublyLinkedList<T>::operator=(const DoublyLinkedList & list)
+{
+	if (this == &list)
+		return *this;
+
+	DoublyLinkedList<T> * tempList = new DoublyLinkedList<T>();
+	Node<T> * current = list.first;
+	while (current != nullptr) {
+		DoublyLinkedList<T> * tempList = new DoublyLinkedList<T>();
+		tempList->add(current->data);
+	}
+	return *tempList;
+}
+
 template <class T>
 DoublyLinkedList<T>::~DoublyLinkedList()
 {
+	this->clear();
+}
+
+template <class T>
+void DoublyLinkedList<T>::clear() {
 	this->first = nullptr;
 	this->last = nullptr;
 }
@@ -54,6 +86,7 @@ void DoublyLinkedList<T>::add(T data)
 	if (!this->first) {
 		// empty list so far
 		this->first = new Node<T>;
+		
 		this->first->data = data;
 		this->first->prev = nullptr;
 		this->first->next = nullptr;

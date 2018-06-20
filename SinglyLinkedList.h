@@ -15,6 +15,8 @@ class SinglyLinkedList
 
 public:
 	SinglyLinkedList();
+	SinglyLinkedList(const SinglyLinkedList &list);
+	SinglyLinkedList& operator=(const SinglyLinkedList& list);
 	~SinglyLinkedList();
 	void add(T data);
 	T get(int index);
@@ -22,6 +24,7 @@ public:
 	void remove(int index);
 	int search(T data);
 	void printAll();
+	void clear();
 
 private:
 	Node<T> * first;
@@ -39,9 +42,38 @@ SinglyLinkedList<T>::SinglyLinkedList()
 	this->last = nullptr;
 }
 
+template<class T>
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList & list)
+{
+	Node<T> * current = list.first;
+	while (current != nullptr) {
+		this->add(current->data);
+	}
+}
+
+template<class T>
+SinglyLinkedList<T> & SinglyLinkedList<T>::operator=(const SinglyLinkedList & list)
+{
+	if (this == &list)
+		return *this;
+
+	SinglyLinkedList<T> * tempList = new SinglyLinkedList<T>();
+	Node<T> * current = list.first;
+	while (current != nullptr) {
+		SinglyLinkedList<T> * tempList = new SinglyLinkedList<T>();
+		tempList->add(current->data);
+	}
+	return *tempList;
+}
+
 template <class T>
 SinglyLinkedList<T>::~SinglyLinkedList()
 {
+	this->clear();
+}
+
+template <class T>
+void SinglyLinkedList<T>::clear() {
 	this->first = nullptr;
 	this->last = nullptr;
 }
