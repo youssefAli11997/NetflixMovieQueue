@@ -115,6 +115,7 @@ void ProgramManager::profileMenu()
 	cin >> option;
 
 	if (option == 1) {
+		// TODO: options
 		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
 	}
 	else if (option == 2) {
@@ -126,17 +127,22 @@ void ProgramManager::profileMenu()
 		cout << "Enter Movie Name: "; cin >> name;
 		cout << "Enter Year : "; cin >> year;
 		cout << "Category : "; cin >> category;
-		cout << "Rating: "; cin >> rating;
+		cout << "Rating : "; cin >> rating;
 		cout << "Ranking(1 - 5) : "; cin >> ranking;
 
 		Movie movie(name, year, category, rating, ranking);
-		cout << movie.getName() << " " << movie.getCategory() << endl;
+		//cout << movie.getName() << " " << movie.getCategory() << endl;
 		this->profiles.get(this->currentProfileIndex)->addMovieToQueue(&movie);
 
 		cout << "Movie added to the Queue!\n";
 		//this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
 	}
-
+	else if (option == 3) {
+		string name;
+		int year;
+		cout << "Enter Movie Name: "; cin >> name;
+		cout << "Enter Year : "; cin >> year;
+	}
 
 	else if (option == 6) {
 		this->isMainMenu = true;

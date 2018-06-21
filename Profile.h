@@ -16,8 +16,8 @@ public:
 	string getFirstName();
 	string getLastName();
 	int getAge();
-	DoublyLinkedList<Category*> getCategories();
-	void addCategories(DoublyLinkedList<Category*> categories);
+	SinglyLinkedList<Category*> getCategories();
+	void addCategories(SinglyLinkedList<Category*> categories);
 	void displayMovieQueue(int option);
 	void addMovieToQueue(Movie* movie);
 	void editMovieInQueue(string name, int year); // TODO: determine inputs
@@ -31,7 +31,7 @@ private:
 	string firstName;
 	string lastName;
 	int age;
-	DoublyLinkedList<Category *> categories;
+	SinglyLinkedList<Category *> categories;
 	int findCategory(string categoryName);
 };
 

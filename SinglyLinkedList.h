@@ -91,7 +91,6 @@ void SinglyLinkedList<T>::add(T data)
 		// empty list so far
 		this->first = new Node<T>;
 		this->first->data = data;
-		cout << data.getName() << endl;
 		this->first->next = nullptr;
 		this->last = this->first;
 		this->size++;
