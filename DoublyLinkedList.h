@@ -74,7 +74,9 @@ DoublyLinkedList<T> & DoublyLinkedList<T>::operator=(const DoublyLinkedList & li
 template <class T>
 DoublyLinkedList<T>::~DoublyLinkedList()
 {
-	this->clear();
+	first = nullptr;
+	last = nullptr;
+	size = 0;
 }
 
 template <class T>

@@ -6,11 +6,19 @@ Category::Category()
 {
 }
 
+Category::Category(const Category & category)
+{
+	this->name = category.name;
+	this->numberOfMovies = category.numberOfMovies;
+	this->movies = category.movies;
+}
+
 Category::Category(string name)
 {
 	this->name = name;
 	this->numberOfMovies = 0;
-	this->movies.clear();
+	this->movies = DoublyLinkedList<Movie>();
+	cout << this->movies.getSize() << " constructor ok" << endl;
 }
 
 Category::~Category()
@@ -28,7 +36,7 @@ int Category::getNumberOfMovies()
 	return this->numberOfMovies;
 }
 
-SinglyLinkedList<Movie> Category::getMovies()
+DoublyLinkedList<Movie> Category::getMovies()
 {
 	return this->movies;
 }
@@ -40,6 +48,12 @@ void Category::displayMovieQueue(int option)
 
 void Category::addMovieToQueue(Movie movie)
 {
+	//cout << newMovie.getName() << " " << newMovie.getCategory() << endl;
+	cout << "nm : " << this->name << endl;
+	cout << "movs sz: " << this->movies.getSize() << endl;
+	this->movies.add(Movie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking()));
+	this->numberOfMovies++;
+	cout << this->movies.get(0).getName() << " ok" << endl;
 }
 
 void Category::editMovieInQueue()

@@ -71,7 +71,7 @@ void ProgramManager::mainMenu()
 		cout << "Enter Last Name : "; getline(cin, lname);
 		cout << "Enter Age : "; cin >> age; getline(cin, s);
 		// TODO: input verification
-		cout << "num: " << this->numberOfProfiles << endl;
+
 		if (this->numberOfProfiles > 0) {
 			int option;
 			cout << "Enter Number of Profile to Copy or 0 to create new profile: ";
@@ -83,7 +83,7 @@ void ProgramManager::mainMenu()
 			}
 			else {
 				Profile newProfile(label, fname, lname, age);
-				newProfile.addCategories(profiles.get(option).getCategories());
+				//newProfile.addCategories(profiles->get(option).getCategories());
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
 			}
@@ -113,6 +113,35 @@ void ProgramManager::profileMenu()
 	cout << "Enter option : ";
 	int option;
 	cin >> option;
+
+	if (option == 1) {
+		this->profiles.get(this->currentProfileIndex).displayMovieQueue(1);
+	}
+	else if (option == 2) {
+		string name;
+		int year;
+		string category;
+		string rating;
+		int ranking;
+		cout << "Enter Movie Name: "; cin >> name;
+		cout << "Enter Year : "; cin >> year;
+		cout << "Category : "; cin >> category;
+		cout << "Rating: "; cin >> rating;
+		cout << "Ranking(1 - 5) : "; cin >> ranking;
+
+		Movie movie(name, year, category, rating, ranking);
+		cout << movie.getName() << " " << movie.getCategory() << endl;
+		this->profiles.get(this->currentProfileIndex).addMovieToQueue(movie);
+
+		cout << "Movie added to the Queue!\n";
+	}
+
+
+	else if (option == 6) {
+		this->isMainMenu = true;
+		this->isProfileMenu = false;
+		this->currentProfileIndex = -1;
+	}
 }
 
 void ProgramManager::displayOptionsMenu()

@@ -72,7 +72,9 @@ SinglyLinkedList<T> & SinglyLinkedList<T>::operator=(const SinglyLinkedList & li
 template <class T>
 SinglyLinkedList<T>::~SinglyLinkedList()
 {
-	this->clear();
+	first = nullptr;
+	last = nullptr;
+	size = 0;
 }
 
 template <class T>
@@ -89,6 +91,7 @@ void SinglyLinkedList<T>::add(T data)
 		// empty list so far
 		this->first = new Node<T>;
 		this->first->data = data;
+		cout << data.getName() << endl;
 		this->first->next = nullptr;
 		this->last = this->first;
 		this->size++;

@@ -44,7 +44,7 @@ Profile::Profile(string label, string firstName, string lastName, int age)
 
 Profile::~Profile()
 {
-	this->categories.clear();
+	
 }
 
 string Profile::getLabel()
@@ -67,12 +67,12 @@ int Profile::getAge()
 	return this->age;
 }
 
-SinglyLinkedList<Category> Profile::getCategories()
+DoublyLinkedList<Category> Profile::getCategories()
 {
 	return this->categories;
 }
 
-void Profile::addCategories(SinglyLinkedList<Category> categories)
+void Profile::addCategories(DoublyLinkedList<Category> categories)
 {
 	int categoriesCount = categories.getSize();
 	for (int i = 0; i < categoriesCount; i++) {
@@ -85,11 +85,42 @@ void Profile::addCategories(SinglyLinkedList<Category> categories)
 
 void Profile::displayMovieQueue(int option)
 {
-
+	cout << this->categories.getSize() << endl;
+	for (int i = 0; i < this->categories.getSize(); i++) {
+		cout << this->categories.get(i).getName() << " " << this->categories.get(i).getNumberOfMovies() << "\n---------\n";
+		for (int j = 0; j < this->categories.get(i).getNumberOfMovies(); j++) {
+			cout << this->categories.get(i).getMovies().get(i).getName() << endl;
+		}
+		cout << "************************\n";
+	}
 }
 
 void Profile::addMovieToQueue(Movie movie)
 {
+	Movie newMovie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking());
+	cout << newMovie.getName() << " : " << newMovie.getYear() << endl;
+	string category = movie.getCategory();
+	int categoryIndex = this->findCategory(category);
+	cout << "index: " << categoryIndex << endl;
+	if (categoryIndex > -1) {
+		cout << "here!!!!\n";
+		this->categories.get(categoryIndex).addMovieToQueue(newMovie);
+	}
+	else {
+		Category newCategory = Category(category);
+		//cout << "ok " << newCategory.getMovies().get(0).getName() << endl;
+		cout << "ok\n";
+		cout << "cat sz: " << this->categories.getSize() << endl;
+		this->categories.add(newCategory);
+		cout << "add ok\n";
+		cout << "size: " << this->categories.getSize() << endl;
+		cout << this->categories.get(this->categories.getSize() - 1).getName() << endl;
+		//cout << this->categories.get(this->categories.getSize() - 1).getMovies().getSize() << endl;
+		//this->categories.get(this->categories.getSize() - 1).getMovies().add(Movie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking()));
+
+		this->categories.get(this->categories.getSize()-1).addMovieToQueue(newMovie);
+		cout << this->categories.get(0).getName() << " ok2" << endl;
+	}
 }
 
 void Profile::editMovieInQueue(string name, int year)
@@ -104,4 +135,14 @@ string Profile::removeMovieFromQueue(string name, int year)
 string Profile::searchForMovieInQueue(string name, int year)
 {
 	return string();
+}
+
+int Profile::findCategory(string categoryName)
+{
+	int catesCount = this->categories.getSize();
+	for (int i = 0; i < catesCount; i++) {
+		if (categoryName == this->categories.get(i).getName())
+			return i;
+	}
+	return -1;
 }
