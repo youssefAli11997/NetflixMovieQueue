@@ -78,7 +78,7 @@ void Profile::addCategories(DoublyLinkedList<Category*> categories)
 	for (int i = 0; i < categoriesCount; i++) {
 		int moviesCount = categories.get(i)->getNumberOfMovies();
 		for (int j = 0; j < moviesCount; j++) {
-			this->addMovieToQueue(categories.get(i)->getMovies().get(j));
+			this->addMovieToQueue(&(categories.get(i)->getMovies().get(j)));
 		}
 	}
 }
@@ -88,7 +88,7 @@ void Profile::displayMovieQueue(int option)
 	cout << "siz shit: " << this->categories.getSize() << endl;
 	for (int i = 0; i < this->categories.getSize(); i++) {
 		cout << "\n---------\n" << this->categories.get(i)->getName() << " " << this->categories.get(i)->getNumberOfMovies() << "\n---------\n";
-		cout << "movssssssssss " << this->categories.get(i)->getMovies().getSize() << endl;
+		cout << "movssssssssss " << this->categories.get(i)->movies.getSize() << endl;
 		this->categories.get(i)->displayMovieQueue(option);
 		/*for (int j = 0; j < this->categories.get(i)->getNumberOfMovies(); j++) {
 			cout << this->categories.get(i)->getMovies().get(j)->getName() << endl;
@@ -100,13 +100,13 @@ void Profile::displayMovieQueue(int option)
 void Profile::addMovieToQueue(Movie * movie)
 {
 	//Movie newMovie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking());
-	//cout << newMovie.getName() << " : " << newMovie.getYear() << endl;
+	cout << movie->getName() << " : " << movie->getYear() << endl;
 	string category = movie->getCategory();
 	int categoryIndex = this->findCategory(category);
 	cout << "index: " << categoryIndex << endl;
 	if (categoryIndex > -1) {
 		cout << "here!!!!\n";
-		this->categories.get(categoryIndex)->addMovieToQueue(movie);
+		this->categories.get(categoryIndex)->addMovieToQueue(*movie);
 	}
 	else {
 		Category * newCategory = new Category(category);
@@ -117,10 +117,11 @@ void Profile::addMovieToQueue(Movie * movie)
 		cout << "add ok\n";
 		cout << "size: " << this->categories.getSize() << endl;
 		cout << this->categories.get(this->categories.getSize() - 1)->getName() << endl;
-		cout << this->categories.get(this->categories.getSize() - 1)->getMovies().getSize() << endl;
-		//this->categories.get(this->categories.getSize() - 1)->getMovies().add(movie);
+		this->categories.get(this->categories.getSize() - 1)->movies = DoublyLinkedList<Movie>();
+		cout << this->categories.get(this->categories.getSize() - 1)->movies.getSize() << endl;
+		//this->categories.get(this->categories.getSize() - 1)->getMovies().add(*movie);
 
-		this->categories.get(this->categories.getSize()-1)->addMovieToQueue(movie);
+		this->categories.get(this->categories.getSize()-1)->addMovieToQueue(*movie);
 		cout << this->categories.get(0)->getName() << " ok2" << endl;
 		//cout << "begin: \n";
 		//this->displayMovieQueue(1);
