@@ -24,6 +24,7 @@ public:
 	T operator[](int index);
 	void remove(int index);
 	int search(T data);
+	int getSize();
 	void printAll();
 	void printAllReversed();
 	void clear();
@@ -32,6 +33,7 @@ private:
 	Node<T> * first;
 	Node<T> * last;
 	const int NOT_FOUND = -1;
+	int size;
 };
 
 
@@ -42,6 +44,7 @@ DoublyLinkedList<T>::DoublyLinkedList()
 {
 	this->first = nullptr;
 	this->last = nullptr;
+	this->size = 0;
 }
 
 template<class T>
@@ -78,6 +81,7 @@ template <class T>
 void DoublyLinkedList<T>::clear() {
 	this->first = nullptr;
 	this->last = nullptr;
+	this->size = 0;
 }
 
 template <class T>
@@ -86,11 +90,11 @@ void DoublyLinkedList<T>::add(T data)
 	if (!this->first) {
 		// empty list so far
 		this->first = new Node<T>;
-		
 		this->first->data = data;
 		this->first->prev = nullptr;
 		this->first->next = nullptr;
 		this->last = this->first;
+		this->size++;
 	}
 	else {
 		// non empty list
@@ -101,6 +105,7 @@ void DoublyLinkedList<T>::add(T data)
 			this->last->next = nullptr;
 			this->last->prev = this->first;
 			this->first->next = this->last;
+			this->size++;
 		}
 		else {
 			// has more than one element
@@ -110,6 +115,7 @@ void DoublyLinkedList<T>::add(T data)
 			node->next = nullptr;
 			this->last->next = node;
 			this->last = node;
+			this->size++;
 		}
 	}
 }
@@ -144,11 +150,13 @@ void DoublyLinkedList<T>::remove(int index)
 			// has only one element
 			this->first = nullptr;
 			this->last = nullptr;
+			this->size--;
 		}
 		else {
 			// has more than one element
 			this->first = this->first->next;
 			this->first->prev = nullptr;
+			this->size--;
 		}
 	}
 	else {
@@ -160,10 +168,12 @@ void DoublyLinkedList<T>::remove(int index)
 		if (current->next == this->last) {
 			current->next = nullptr;
 			this->last = current;
+			this->size--;
 		}
 		else {
 			current->next = current->next->next;
 			current->next->prev = current;
+			this->size--;
 		}
 	}
 }
@@ -181,6 +191,12 @@ int DoublyLinkedList<T>::search(T data)
 		current = current->next;
 	}
 	return this->NOT_FOUND;
+}
+
+template<class T>
+inline int DoublyLinkedList<T>::getSize()
+{
+	return this->size;
 }
 
 template <class T>

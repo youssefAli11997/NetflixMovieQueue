@@ -9,6 +9,7 @@ public:
 	~Category();
 	string getName();
 	int getNumberOfMovies();
+	SinglyLinkedList<Movie> getMovies();
 	void displayMovieQueue(int option);
 	void addMovieToQueue(Movie movie);
 	void editMovieInQueue(); // TODO: determine inputs

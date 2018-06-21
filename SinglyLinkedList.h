@@ -23,6 +23,7 @@ public:
 	T operator[](int index);
 	void remove(int index);
 	int search(T data);
+	int getSize();
 	void printAll();
 	void clear();
 
@@ -30,6 +31,7 @@ private:
 	Node<T> * first;
 	Node<T> * last;
 	const int NOT_FOUND = -1;
+	int size;
 };
 
 
@@ -40,6 +42,7 @@ SinglyLinkedList<T>::SinglyLinkedList()
 {
 	this->first = nullptr;
 	this->last = nullptr;
+	this->size = 0;
 }
 
 template<class T>
@@ -76,6 +79,7 @@ template <class T>
 void SinglyLinkedList<T>::clear() {
 	this->first = nullptr;
 	this->last = nullptr;
+	this->size = 0;
 }
 
 template <class T>
@@ -87,6 +91,7 @@ void SinglyLinkedList<T>::add(T data)
 		this->first->data = data;
 		this->first->next = nullptr;
 		this->last = this->first;
+		this->size++;
 	}
 	else {
 		if (this->last == this->first) {
@@ -95,6 +100,7 @@ void SinglyLinkedList<T>::add(T data)
 			this->last->data = data;
 			this->last->next = nullptr;
 			this->first->next = this->last;
+			this->size++;
 		}
 		else {
 			// has more than one element
@@ -103,6 +109,7 @@ void SinglyLinkedList<T>::add(T data)
 			node->next = nullptr;
 			this->last->next = node;
 			this->last = node;
+			this->size++;
 		}
 	}
 }
@@ -137,10 +144,12 @@ void SinglyLinkedList<T>::remove(int index)
 			// has only one element
 			this->first = nullptr;
 			this->last = nullptr;
+			this->size--;
 		}
 		else {
 			// has more than one element
 			this->first = this->first->next;
+			this->size--;
 		}
 	}
 	else {
@@ -152,9 +161,11 @@ void SinglyLinkedList<T>::remove(int index)
 		if (current->next == this->last) {
 			current->next = nullptr;
 			this->last = current;
+			this->size--;
 		}
 		else {
 			current->next = current->next->next;
+			this->size--;
 		}
 	}
 }
@@ -172,6 +183,12 @@ int SinglyLinkedList<T>::search(T data)
 		current = current->next;
 	}
 	return this->NOT_FOUND;
+}
+
+template<class T>
+inline int SinglyLinkedList<T>::getSize()
+{
+	return this->size;
 }
 
 template <class T>

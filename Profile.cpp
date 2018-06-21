@@ -67,6 +67,22 @@ int Profile::getAge()
 	return this->age;
 }
 
+SinglyLinkedList<Category> Profile::getCategories()
+{
+	return this->categories;
+}
+
+void Profile::addCategories(SinglyLinkedList<Category> categories)
+{
+	int categoriesCount = categories.getSize();
+	for (int i = 0; i < categoriesCount; i++) {
+		int moviesCount = categories.get(i).getNumberOfMovies();
+		for (int j = 0; j < moviesCount; j++) {
+			this->addMovieToQueue(categories.get(i).getMovies().get(j));
+		}
+	}
+}
+
 void Profile::displayMovieQueue(int option)
 {
 

@@ -28,6 +28,11 @@ int Category::getNumberOfMovies()
 	return this->numberOfMovies;
 }
 
+SinglyLinkedList<Movie> Category::getMovies()
+{
+	return this->movies;
+}
+
 void Category::displayMovieQueue(int option)
 {
 
