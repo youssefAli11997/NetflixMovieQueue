@@ -8,16 +8,17 @@ Category::Category()
 
 Category::Category(const Category & category)
 {
+	cout << "copy categsssssssss\n";
 	this->name = category.name;
 	this->numberOfMovies = category.numberOfMovies;
-	this->movies = category.movies;
+	//this->movies = category.movies;
 }
 
 Category::Category(string name)
 {
 	this->name = name;
 	this->numberOfMovies = 0;
-	this->movies = DoublyLinkedList<Movie>();
+	this->movies = DoublyLinkedList<Movie*>();
 	cout << this->movies.getSize() << " constructor ok" << endl;
 }
 
@@ -36,24 +37,28 @@ int Category::getNumberOfMovies()
 	return this->numberOfMovies;
 }
 
-DoublyLinkedList<Movie> Category::getMovies()
+DoublyLinkedList<Movie*> Category::getMovies()
 {
 	return this->movies;
 }
 
 void Category::displayMovieQueue(int option)
 {
-
+	for (int j = 0; j < this->getNumberOfMovies(); j++) {
+		cout << this->getMovies().get(j)->getName() << endl;
+	}
+	cout << "************************\n";
 }
 
-void Category::addMovieToQueue(Movie movie)
+void Category::addMovieToQueue(Movie * movie)
 {
 	//cout << newMovie.getName() << " " << newMovie.getCategory() << endl;
 	cout << "nm : " << this->name << endl;
 	cout << "movs sz: " << this->movies.getSize() << endl;
-	this->movies.add(Movie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking()));
+	//this->movies.add(Movie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking()));
+	this->movies.add(movie);
 	this->numberOfMovies++;
-	cout << this->movies.get(0).getName() << " ok" << endl;
+	cout << this->movies.get(0)->getName() << " ok" << endl;
 }
 
 void Category::editMovieInQueue()

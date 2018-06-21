@@ -10,9 +10,9 @@ public:
 	~Category();
 	string getName();
 	int getNumberOfMovies();
-	DoublyLinkedList<Movie> getMovies();
+	DoublyLinkedList<Movie *> getMovies();
 	void displayMovieQueue(int option);
-	void addMovieToQueue(Movie movie);
+	void addMovieToQueue(Movie* movie);
 	void editMovieInQueue(); // TODO: determine inputs
 	string removeMovieFromQueue(string name, int year);
 	string searchForMovieInQueue(string name, int year); // TODO: make sure of inputs
@@ -20,6 +20,6 @@ public:
 private:
 	string name;
 	int numberOfMovies;
-	DoublyLinkedList<Movie> movies;
+	DoublyLinkedList<Movie *> movies;
 };
 

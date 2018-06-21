@@ -39,7 +39,7 @@ void ProgramManager::mainMenu()
 {
 	cout << "Welcome to the Netflix Movie Menu! Please select (or create) a profile:\n\n";
 	for (int i = 0; i < this->numberOfProfiles; i++) {
-		string profileLabel = this->profiles.get(i).getLabel();
+		string profileLabel = this->profiles.get(i)->getLabel();
 		cout << i + 1 << ". " << profileLabel << endl;
 	}
 	cout << this->numberOfProfiles+1 << ". Add New Profile\n" << this->numberOfProfiles+2 << ". Exit Program\n";
@@ -77,19 +77,19 @@ void ProgramManager::mainMenu()
 			cout << "Enter Number of Profile to Copy or 0 to create new profile: ";
 			cin >> option; getline(cin, s);
 			if (option == 0) {
-				Profile newProfile(label, fname, lname, age);
+				Profile* newProfile = new Profile(label, fname, lname, age);
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
 			}
 			else {
-				Profile newProfile(label, fname, lname, age);
+				Profile* newProfile = new Profile(label, fname, lname, age);
 				//newProfile.addCategories(profiles->get(option).getCategories());
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
 			}
 		}
 		else {
-			Profile newProfile(label, fname, lname, age);
+			Profile* newProfile = new Profile(label, fname, lname, age);
 			profiles.add(newProfile);
 			this->numberOfProfiles++;
 		}
@@ -103,7 +103,7 @@ void ProgramManager::mainMenu()
 
 void ProgramManager::profileMenu()
 {
-	cout << this->profiles.get(this->currentProfileIndex).getLabel() << " Movie Queue\n\n";
+	cout << this->profiles.get(this->currentProfileIndex)->getLabel() << " Movie Queue\n\n";
 	cout << "1. Display Movie Queue\n";
 	cout << "2. Add Movie to Queue\n";
 	cout << "3. Edit Movie in Queue\n";
@@ -115,7 +115,7 @@ void ProgramManager::profileMenu()
 	cin >> option;
 
 	if (option == 1) {
-		this->profiles.get(this->currentProfileIndex).displayMovieQueue(1);
+		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
 	}
 	else if (option == 2) {
 		string name;
@@ -131,9 +131,10 @@ void ProgramManager::profileMenu()
 
 		Movie movie(name, year, category, rating, ranking);
 		cout << movie.getName() << " " << movie.getCategory() << endl;
-		this->profiles.get(this->currentProfileIndex).addMovieToQueue(movie);
+		this->profiles.get(this->currentProfileIndex)->addMovieToQueue(&movie);
 
 		cout << "Movie added to the Queue!\n";
+		//this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
 	}
 
 

@@ -20,7 +20,7 @@ private:
 	bool isDisplayOptionsMenu;
 	bool exit;
 	int currentProfileIndex;
-	DoublyLinkedList<Profile> profiles;
+	DoublyLinkedList<Profile *> profiles;
 	int numberOfProfiles;
 };
 
