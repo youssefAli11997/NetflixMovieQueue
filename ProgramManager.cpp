@@ -83,7 +83,8 @@ void ProgramManager::mainMenu()
 			}
 			else {
 				Profile* newProfile = new Profile(label, fname, lname, age);
-				//newProfile.addCategories(profiles->get(option).getCategories());
+				//cout << "szzzzzzzzz: " << profiles.get(option - 1)->categories.getSize() << endl;
+				newProfile->addCategories(&profiles.get(option-1)->categories);
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
 			}
@@ -115,8 +116,8 @@ void ProgramManager::profileMenu()
 	cin >> option;
 
 	if (option == 1) {
-		// TODO: options
-		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
+		this->isProfileMenu = false;
+		this->isDisplayOptionsMenu = true;
 	}
 	else if (option == 2) {
 		string name;
@@ -142,8 +143,67 @@ void ProgramManager::profileMenu()
 		int year;
 		cout << "Enter Movie Name: "; cin >> name;
 		cout << "Enter Year : "; cin >> year;
-	}
 
+		pair<int, int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
+		if (pos.first == -1 && pos.second == -1) {
+			cout << "Movie not found!\n";
+		}
+		else {
+			string name;
+			int year;
+			string category;
+			string rating;
+			int ranking;
+			cout << "Enter Movie Name: "; cin >> name;
+			cout << "Enter Year : "; cin >> year;
+			cout << "Category : "; cin >> category;
+			cout << "Rating : "; cin >> rating;
+			cout << "Ranking(1 - 5) : "; cin >> ranking;
+
+			Movie movie(name, year, category, rating, ranking);
+
+			this->profiles.get(this->currentProfileIndex)->editMovieInQueue(pos, &movie);
+		}
+
+		cout << "Movie edited!\n";
+	}
+	else if (option == 4) {
+		string name;
+		int year;
+		cout << "Enter Movie Name: "; cin >> name;
+		cout << "Enter Year : "; cin >> year;
+		
+		pair<int, int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
+		if (pos.first == -1 && pos.second == -1) {
+			cout << "Movie not found!\n";
+		}
+		else {
+			this->profiles.get(this->currentProfileIndex)->removeMovieFromQueue(pos);
+		}
+	}
+	else if (option == 5) {
+		string name;
+		int year;
+		cout << "Enter Movie Name: "; cin >> name;
+		cout << "Enter Year : "; cin >> year;
+		pair<int,int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
+		if (pos.first != -1 && pos.second != -1) {
+			Movie movie = this->profiles.get(this->currentProfileIndex)->categories.get(pos.first)->movies.get(pos.second);
+			cout << "\n----------------------------\n";
+			cout << movie.getName() << endl;
+			cout << "Year : " << movie.getYear() << endl;
+			cout << "Category : " << movie.getCategory() << endl;
+			cout << "Rated : " << movie.getRating() << endl;
+			cout << "Ranked : ";
+			for (int k = 0; k < movie.getRanking(); k++) {
+				cout << "*";
+			}cout << endl;
+			cout << "----------------------------\n";
+		}
+		else {
+			cout << "Movie not found!\n";
+		}
+	}
 	else if (option == 6) {
 		this->isMainMenu = true;
 		this->isProfileMenu = false;
@@ -153,4 +213,14 @@ void ProgramManager::profileMenu()
 
 void ProgramManager::displayOptionsMenu()
 {
+	cout << "\nDisplay options:\n\n";
+	cout << "1. Highest to Lowest Ranking\n";
+	cout << "2. Lowest to Highest Ranking\n";
+	cout << "3. Filter by Rating\n";
+	cout << "4. Filter by Category\n";
+	cout << "5. Sorted movie queue\n";
+	cout << "6. Exit Display Menu\n\n";
+	int option;
+	cout << "Enter option: "; cin >> option;
+	this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);
 }

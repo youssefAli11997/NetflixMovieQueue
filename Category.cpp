@@ -6,14 +6,6 @@ Category::Category()
 {
 }
 
-Category::Category(const Category & category)
-{
-	//cout << "copy categsssssssss\n";
-	this->name = category.name;
-	this->numberOfMovies = category.numberOfMovies;
-	//this->movies = category.movies;
-}
-
 Category::Category(string name)
 {
 	this->name = name;
@@ -52,16 +44,11 @@ void Category::displayMovieQueue(int option)
 
 void Category::addMovieToQueue(Movie movie)
 {
-	//cout << newMovie.getName() << " " << newMovie.getCategory() << endl;
-	//cout << "nm : " << this->name << endl;
-	//cout << "movs sz: " << this->movies.getSize() << endl;
-	//this->movies.add(Movie(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking()));
 	this->movies.add(movie);
 	this->numberOfMovies++;
-	//cout << this->movies.get(0).getName() << " ok" << endl;
 }
 
-void Category::editMovieInQueue()
+void Category::editMovieInQueue(string name, int year)
 {
 }
 

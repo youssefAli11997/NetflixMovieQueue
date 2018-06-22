@@ -5,7 +5,6 @@ class Category
 {
 public:
 	Category();
-	Category(const Category &category);
 	Category(string name);
 	~Category();
 	string getName();
@@ -13,13 +12,13 @@ public:
 	SinglyLinkedList<Movie> getMovies();
 	void displayMovieQueue(int option);
 	void addMovieToQueue(Movie movie);
-	void editMovieInQueue(); // TODO: determine inputs
+	void editMovieInQueue(string name, int year);
 	string removeMovieFromQueue(string name, int year);
 	string searchForMovieInQueue(string name, int year); // TODO: make sure of inputs
+	SinglyLinkedList<Movie> movies = SinglyLinkedList<Movie>();
 
 private:
 	string name;
 	int numberOfMovies;
-	SinglyLinkedList<Movie> movies = SinglyLinkedList<Movie>();
 };
 

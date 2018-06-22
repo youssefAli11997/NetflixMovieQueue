@@ -9,7 +9,6 @@ class Profile
 public:
 	Profile();
 	Profile(const Profile &profile); // copy constructor
-	//Profile& operator=(const Profile& profile);
 	Profile(string label, string firstName, string lastName, int age);
 	~Profile();
 	string getLabel();
@@ -17,13 +16,13 @@ public:
 	string getLastName();
 	int getAge();
 	SinglyLinkedList<Category*> getCategories();
-	void addCategories(SinglyLinkedList<Category*> categories);
+	void addCategories(SinglyLinkedList<Category*> * categories);
 	void displayMovieQueue(int option);
 	void addMovieToQueue(Movie* movie);
-	void editMovieInQueue(string name, int year); // TODO: determine inputs
-	string removeMovieFromQueue(string name, int year);
-	string searchForMovieInQueue(string name, int year); // TODO: make sure of inputs
-
+	void editMovieInQueue(pair<int, int> pos, Movie * movie);
+	void removeMovieFromQueue(pair<int,int> pos);
+	pair<int, int> searchForMovieInQueue(string name, int year);
+	SinglyLinkedList<Category *> categories;
 
 
 private:
@@ -31,7 +30,6 @@ private:
 	string firstName;
 	string lastName;
 	int age;
-	SinglyLinkedList<Category *> categories;
 	int findCategory(string categoryName);
 };
 
