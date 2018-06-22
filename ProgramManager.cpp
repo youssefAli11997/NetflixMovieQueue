@@ -15,6 +15,7 @@ ProgramManager::ProgramManager()
 
 ProgramManager::~ProgramManager()
 {
+	this->profiles.clear();
 }
 
 void ProgramManager::start()
@@ -83,7 +84,6 @@ void ProgramManager::mainMenu()
 			}
 			else {
 				Profile* newProfile = new Profile(label, fname, lname, age);
-				//cout << "szzzzzzzzz: " << profiles.get(option - 1)->categories.getSize() << endl;
 				newProfile->addCategories(&profiles.get(option-1)->categories);
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
@@ -104,7 +104,7 @@ void ProgramManager::mainMenu()
 
 void ProgramManager::profileMenu()
 {
-	cout << this->profiles.get(this->currentProfileIndex)->getLabel() << " Movie Queue\n\n";
+	cout << "\n" << this->profiles.get(this->currentProfileIndex)->getLabel() << " Movie Queue\n\n";
 	cout << "1. Display Movie Queue\n";
 	cout << "2. Add Movie to Queue\n";
 	cout << "3. Edit Movie in Queue\n";
@@ -230,7 +230,7 @@ void ProgramManager::displayOptionsMenu()
 	else if (option == 4) {
 		string category;
 		cout << "Enter Category: "; cin >> category;
-		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option, category);
+		*this->profiles.get(this->currentProfileIndex) << category;
 	}
 	else if (option == 5) {
 		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);

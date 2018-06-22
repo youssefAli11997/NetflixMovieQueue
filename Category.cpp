@@ -18,6 +18,32 @@ Category::~Category()
 	this->movies.clear();
 }
 
+Category& Category::operator++()
+{
+	this->numberOfMovies++;
+	return *this;
+}
+
+Category Category::operator++(int)
+{
+	Category temp = *this;
+	++*this;
+	return temp;
+}
+
+Category& Category::operator--()
+{
+	this->numberOfMovies--;
+	return *this;
+}
+
+Category Category::operator--(int)
+{
+	Category temp = *this;
+	--*this;
+	return temp;
+}
+
 string Category::getName()
 {
 	return this->name;
@@ -31,32 +57,4 @@ int Category::getNumberOfMovies()
 SinglyLinkedList<Movie> Category::getMovies()
 {
 	return this->movies;
-}
-
-void Category::displayMovieQueue(int option)
-{
-	for (int j = 0; j < this->getNumberOfMovies(); j++) {
-		cout << this->movies.get(j).getName() << endl;
-	}
-	cout << "************************\n";
-}
-
-void Category::addMovieToQueue(Movie movie)
-{
-	this->movies.add(movie);
-	this->numberOfMovies++;
-}
-
-void Category::editMovieInQueue(string name, int year)
-{
-}
-
-string Category::removeMovieFromQueue(string name, int year)
-{
-	return string();
-}
-
-string Category::searchForMovieInQueue(string name, int year)
-{
-	return string();
 }

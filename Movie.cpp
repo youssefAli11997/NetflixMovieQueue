@@ -27,6 +27,16 @@ Movie::~Movie()
 {
 }
 
+bool Movie::operator==(Movie * movie)
+{
+	return this->name == movie->getName() && this->year == movie->getYear();
+}
+
+bool Movie::operator!=(Movie * movie)
+{
+	return !(this->name == movie->getName() && this->year == movie->getYear());
+}
+
 string Movie::getName()
 {
 	return this->name;

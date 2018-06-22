@@ -6,6 +6,8 @@ public:
 	Movie(const Movie& movie);
 	Movie(string name, int year, string category, string rating, int ranking);
 	~Movie();
+	bool operator==(Movie* movie);
+	bool operator!=(Movie* movie);
 	string getName();
 	string getRating();
 	string getCategory();
