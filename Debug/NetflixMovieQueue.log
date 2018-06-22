@@ -1,8 +1,2 @@
-﻿  stdafx.cpp
-  ProgramManager.cpp
-  Profile.cpp
-  NetflixMovieQueue.cpp
-  Movie.cpp
-  Category.cpp
-  Generating Code...
+﻿  ProgramManager.cpp
   NetflixMovieQueue.vcxproj -> D:\Programming\Projects\VisualC++\NetflixMovieQueue\Debug\NetflixMovieQueue.exe

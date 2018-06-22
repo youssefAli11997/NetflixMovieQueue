@@ -6,15 +6,6 @@ Movie::Movie()
 {
 }
 
-Movie::Movie(const Movie & movie)
-{
-	this->name = movie.name;
-	this->year = movie.year;
-	this->category = movie.category;
-	this->rating = movie.rating;
-	this->ranking = movie.ranking;
-}
-
 Movie::Movie(string name, int year, string category, string rating, int ranking) {
 	this->name = name;
 	this->year = year;

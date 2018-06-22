@@ -8,11 +8,9 @@ Profile::Profile()
 
 Profile::Profile(const Profile & profile)
 {
-	this->label = profile.label;
-	this->firstName = profile.firstName;
-	this->lastName = profile.lastName;
-	this->age = profile.age;
-	this->categories = profile.categories;
+	cout << "in copy!!\n";
+	SinglyLinkedList<Category *> catgs = profile.categories;
+	this->addCategories(&catgs);
 }
 
 Profile::Profile(string label, string firstName, string lastName, int age)
@@ -29,8 +27,17 @@ Profile::~Profile()
 	this->categories.clear();
 }
 
+void Profile::edit(string lbl, string fname, string lname, int ag)
+{
+	label = lbl;
+	firstName = fname;
+	lastName = lname;
+	age = ag;
+}
+
 void Profile::operator<<(string category)
 {
+	cout << "The movies in your Queue with Category " << category << " are displayed below.";
 	// fetch all movies
 	SinglyLinkedList<Movie> allMovies = SinglyLinkedList<Movie>();
 	for (int i = 0; i < this->categories.getSize(); i++) {
@@ -217,6 +224,10 @@ void Profile::displayMovieQueue(int option)
 
 void Profile::displayMovieQueue(int option, string value)
 {
+	if(option == 3)
+		cout << "The movies in your Queue with Rating "<< value <<" are displayed below.";
+	if(option == 4)
+		cout << "The movies in your Queue with Category " << value << " are displayed below.";
 	// fetch all movies
 	SinglyLinkedList<Movie> allMovies = SinglyLinkedList<Movie>();
 	for (int i = 0; i < this->categories.getSize(); i++) {

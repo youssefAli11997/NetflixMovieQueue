@@ -46,9 +46,17 @@ void ProgramManager::mainMenu()
 	cout << this->numberOfProfiles+1 << ". Add New Profile\n" << this->numberOfProfiles+2 << ". Exit Program\n";
 	int option;
 	cout << "Enter option: ";
+
+	// integer input validation
 	string s;
-	cin >> option;
 	getline(cin, s);
+	while (s.size() > 0 && !(s[0] >= '1' && s[0] <= this->numberOfProfiles + 2 + '0')) {
+		cout << "Enter option: ";
+		getline(cin, s);
+	}
+	istringstream iss(s);
+	iss >> option;
+	// end of integer input validation
 
 	if (option < 1 || option > this->numberOfProfiles + 2) {
 		return;
@@ -59,43 +67,67 @@ void ProgramManager::mainMenu()
 		this->currentProfileIndex = option-1;
 		this->isMainMenu = false;
 		this->isProfileMenu = true;
+		cout << "\n" << this->profiles.get(this->currentProfileIndex)->getLabel() << " Movie Queue\n\n";
 	}
 	else if (option == this->numberOfProfiles + 1) {
 		string label;
 		string fname;
 		string lname;
 		int age;
-		string s;
 
 		cout << "Enter Profile Label : "; getline(cin,label);
 		cout << "Enter First Name : "; getline(cin, fname);
 		cout << "Enter Last Name : "; getline(cin, lname);
-		cout << "Enter Age : "; cin >> age; getline(cin, s);
-		// TODO: input verification
+		cout << "Enter Age : ";
+		//cin >> age; 
+		//getline(cin, s);
+
+		string s;
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+			cout << "Enter Age : ";
+			getline(cin, s);
+		}
+		istringstream iss(s);
+		iss >> age;
 
 		if (this->numberOfProfiles > 0) {
-			int option;
+			int option2;
 			cout << "Enter Number of Profile to Copy or 0 to create new profile: ";
-			cin >> option; getline(cin, s);
-			if (option == 0) {
+
+			// integer input validation
+			string s;
+			getline(cin, s);
+			while (s.size() > 0 && !(s[0] >= '1' && s[0] <= this->numberOfProfiles + '0')) {
+				cout << "Enter Number of Profile to Copy or 0 to create new profile: ";
+				getline(cin, s);
+			}
+			istringstream iss(s);
+			iss >> option2;
+			// end of integer input validation
+
+			if (option2 == 0) {
 				Profile* newProfile = new Profile(label, fname, lname, age);
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
+				cout << "\nProfile Created!\n\n";
 			}
 			else {
-				Profile* newProfile = new Profile(label, fname, lname, age);
-				newProfile->addCategories(&profiles.get(option-1)->categories);
+				Profile* newProfile = new Profile(*profiles.get(option2 - 1));
+				newProfile->edit(label, fname, lname, age);
 				profiles.add(newProfile);
 				this->numberOfProfiles++;
+
+				cout << "\nProfile Created By Copying " << this->profiles.get(option2 - 1)->getLabel() << " (" << option2 << ")" << "!\n";
 			}
 		}
 		else {
 			Profile* newProfile = new Profile(label, fname, lname, age);
 			profiles.add(newProfile);
 			this->numberOfProfiles++;
+			cout << "\nProfile Created!\n\n";
 		}
 
-		cout << "\nProfile Created!\n\n";
 	}
 	else if (option == this->numberOfProfiles + 2) {
 		this->exit = true;
@@ -104,7 +136,6 @@ void ProgramManager::mainMenu()
 
 void ProgramManager::profileMenu()
 {
-	cout << "\n" << this->profiles.get(this->currentProfileIndex)->getLabel() << " Movie Queue\n\n";
 	cout << "1. Display Movie Queue\n";
 	cout << "2. Add Movie to Queue\n";
 	cout << "3. Edit Movie in Queue\n";
@@ -113,11 +144,28 @@ void ProgramManager::profileMenu()
 	cout << "6. Exit Profile\n";
 	cout << "Enter option : ";
 	int option;
-	cin >> option;
+
+	// integer input validation
+	string s;
+	getline(cin, s);
+	while (s.size() > 0 && !(s[0] >= '1' && s[0] <= '6')) {
+		cout << "Enter option : ";
+		getline(cin, s);
+	}
+	istringstream iss(s);
+	iss >> option;
+	// end of integer input validation
+
+	cout << endl;
 
 	if (option == 1) {
-		this->isProfileMenu = false;
-		this->isDisplayOptionsMenu = true;
+		if (this->profiles.get(this->currentProfileIndex)->categories.getSize() == 0) {
+			cout << "The movie queue is empty! Please add movies to the queue.\n";
+		}
+		else {
+			this->isProfileMenu = false;
+			this->isDisplayOptionsMenu = true;
+		}
 	}
 	else if (option == 2) {
 		string name;
@@ -125,24 +173,57 @@ void ProgramManager::profileMenu()
 		string category;
 		string rating;
 		int ranking;
-		cout << "Enter Movie Name: "; cin >> name;
-		cout << "Enter Year : "; cin >> year;
-		cout << "Category : "; cin >> category;
-		cout << "Rating : "; cin >> rating;
-		cout << "Ranking(1 - 5) : "; cin >> ranking;
+		string s;
+		cout << "Enter Movie Name: "; getline(cin, name);
+		cout << "Enter Year : ";
+
+		// integer input validation
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+			cout << "Enter Year : ";
+			getline(cin, s);
+		}
+		istringstream iss(s);
+		iss >> year;
+		// end of integer input validation
+
+		cout << "Category : "; getline(cin, category);
+		cout << "Rating : "; getline(cin, rating);
+		cout << "Ranking(1 - 5) : ";
+		
+		// integer input validation
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '1' && s[0] <= '5')) {
+			cout << "Ranking(1 - 5) : ";
+			getline(cin, s);
+		}
+		istringstream iss2(s);
+		iss2 >> ranking;
+		// end of integer input validation
 
 		Movie movie(name, year, category, rating, ranking);
-		//cout << movie.getName() << " " << movie.getCategory() << endl;
+
 		this->profiles.get(this->currentProfileIndex)->addMovieToQueue(&movie);
 
-		cout << "Movie added to the Queue!\n";
+		cout << "\nMovie added to the Queue!\n\n";
 		//this->profiles.get(this->currentProfileIndex)->displayMovieQueue(1);
 	}
 	else if (option == 3) {
 		string name;
 		int year;
-		cout << "Enter Movie Name: "; cin >> name;
-		cout << "Enter Year : "; cin >> year;
+		string s;
+		cout << "Enter Movie Name: "; getline(cin, name);
+		cout << "Enter Year : ";  
+		
+		// integer input validation
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+			cout << "Enter Year : ";
+			getline(cin, s);
+		}
+		istringstream iss(s);
+		iss >> year;
+		// end of integer input validation
 
 		pair<int, int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
 		if (pos.first == -1 && pos.second == -1) {
@@ -154,38 +235,84 @@ void ProgramManager::profileMenu()
 			string category;
 			string rating;
 			int ranking;
-			cout << "Enter Movie Name: "; cin >> name;
-			cout << "Enter Year : "; cin >> year;
-			cout << "Category : "; cin >> category;
-			cout << "Rating : "; cin >> rating;
-			cout << "Ranking(1 - 5) : "; cin >> ranking;
+			string s;
+			cout << "Enter Movie Name: "; getline(cin, name);
+			cout << "Enter Year : ";
+
+			// integer input validation
+			getline(cin, s);
+			while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+				cout << "Enter Year : ";
+				getline(cin, s);
+			}
+			istringstream iss(s);
+			iss >> year;
+			// end of integer input validation
+
+			cout << "Category : "; getline(cin, category);
+			cout << "Rating : "; getline(cin, rating);
+			cout << "Ranking(1 - 5) : ";
+
+			// integer input validation
+			getline(cin, s);
+			while (s.size() > 0 && !(s[0] >= '1' && s[0] <= '5')) {
+				cout << "Ranking(1 - 5) : ";
+				getline(cin, s);
+			}
+			istringstream iss2(s);
+			iss2 >> ranking;
+			// end of integer input validation
 
 			Movie movie(name, year, category, rating, ranking);
 
 			this->profiles.get(this->currentProfileIndex)->editMovieInQueue(pos, &movie);
+			cout << "Movie edited!\n";
 		}
 
-		cout << "Movie edited!\n";
 	}
 	else if (option == 4) {
 		string name;
 		int year;
-		cout << "Enter Movie Name: "; cin >> name;
-		cout << "Enter Year : "; cin >> year;
+		string s;
+		cout << "Enter Movie Name: "; getline(cin, name);
+		cout << "Enter Year : "; 
+		
+		// integer input validation
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+			cout << "Enter Year : ";
+			getline(cin, s);
+		}
+		istringstream iss(s);
+		iss >> year;
+		// end of integer input validation
 		
 		pair<int, int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
-		if (pos.first == -1 && pos.second == -1) {
+		if (pos.first == -1 || pos.second == -1) {
 			cout << "Movie not found!\n";
 		}
 		else {
 			this->profiles.get(this->currentProfileIndex)->removeMovieFromQueue(pos);
+			cout << "Movie removed!\n";
 		}
 	}
 	else if (option == 5) {
 		string name;
 		int year;
-		cout << "Enter Movie Name: "; cin >> name;
-		cout << "Enter Year : "; cin >> year;
+		string s;
+		cout << "Enter Movie Name: "; getline(cin, name);
+		cout << "Enter Year : ";
+
+		// integer input validation
+		getline(cin, s);
+		while (s.size() > 0 && !(s[0] >= '0' && s[0] <= '9')) {
+			cout << "Enter Year : ";
+			getline(cin, s);
+		}
+		istringstream iss(s);
+		iss >> year;
+		// end of integer input validation
+
 		pair<int,int> pos = this->profiles.get(this->currentProfileIndex)->searchForMovieInQueue(name, year);
 		if (pos.first != -1 && pos.second != -1) {
 			Movie movie = this->profiles.get(this->currentProfileIndex)->categories.get(pos.first)->movies.get(pos.second);
@@ -220,16 +347,27 @@ void ProgramManager::displayOptionsMenu()
 	cout << "4. Filter by Category\n";
 	cout << "5. Sorted movie queue\n";
 	cout << "6. Exit Display Menu\n\n";
-	int option;
-	cout << "Enter option: "; cin >> option;
+	int option; string s;
+	cout << "Enter option: ";
+
+	// integer input validation
+	getline(cin, s);
+	while (s.size() > 0 && !(s[0] >= '1' && s[0] <= '6')) {
+		cout << "Enter option: ";
+		getline(cin, s);
+	}
+	istringstream iss(s);
+	iss >> option;
+	// end of integer input validation
+
 	if (option == 3) {
 		string rating;
-		cout << "Enter Rating: "; cin >> rating;
+		cout << "Enter Rating: "; getline(cin, rating);
 		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option, rating);
 	}
 	else if (option == 4) {
 		string category;
-		cout << "Enter Category: "; cin >> category;
+		cout << "Enter Category: "; getline(cin, category);
 		*this->profiles.get(this->currentProfileIndex) << category;
 	}
 	else if (option == 5) {
@@ -238,6 +376,7 @@ void ProgramManager::displayOptionsMenu()
 	else if (option == 6) {
 		this->isDisplayOptionsMenu = false;
 		this->isProfileMenu = true;
+		cout << "\nExiting Display Menu.\n\n";
 	}
 	else {
 		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);

@@ -11,6 +11,7 @@ public:
 	Profile(const Profile &profile); // copy constructor
 	Profile(string label, string firstName, string lastName, int age);
 	~Profile();
+	void edit(string lbl, string fname, string lname, int ag);
 	void operator<<(string category);
 	string getLabel();
 	string getFirstName();

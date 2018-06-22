@@ -3,7 +3,6 @@ class Movie
 {
 public:
 	Movie();
-	Movie(const Movie& movie);
 	Movie(string name, int year, string category, string rating, int ranking);
 	~Movie();
 	bool operator==(Movie* movie);

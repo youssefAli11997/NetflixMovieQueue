@@ -15,8 +15,8 @@ class SinglyLinkedList
 
 public:
 	SinglyLinkedList();
-	SinglyLinkedList(const SinglyLinkedList &list);
-	SinglyLinkedList& operator=(const SinglyLinkedList& list);
+	//SinglyLinkedList(const SinglyLinkedList &list);
+	SinglyLinkedList& operator=(const SinglyLinkedList<T>& list);
 	~SinglyLinkedList();
 	void add(T data);
 	T get(int index);
@@ -46,14 +46,18 @@ SinglyLinkedList<T>::SinglyLinkedList()
 	this->size = 0;
 }
 
-template<class T>
-SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList & list)
+/*template<class T>
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T> & list)
 {
+	cout << "copying\n";
+	cout << list.getSize() << endl;
 	Node<T> * current = list.first;
 	while (current != nullptr) {
 		this->add(current->data);
+		current = current->next;
 	}
-}
+	cout << "End copying!\n";
+}*/
 
 template<class T>
 SinglyLinkedList<T> & SinglyLinkedList<T>::operator=(const SinglyLinkedList & list)

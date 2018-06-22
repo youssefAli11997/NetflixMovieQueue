@@ -50,9 +50,10 @@ DoublyLinkedList<T>::DoublyLinkedList()
 template<class T>
 DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList & list)
 {
-	Node<T> * current = list.first;
+	Node<T> * current = list->first;
 	while (current != nullptr) {
 		this->add(current->data);
+		current = current->next;
 	}
 }
 
