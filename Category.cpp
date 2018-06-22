@@ -11,7 +11,6 @@ Category::Category(string name)
 	this->name = name;
 	this->numberOfMovies = 0;
 	//this->movies = DoublyLinkedList<Movie*>();
-	//cout << this->movies.getSize() << " constructor ok" << endl;
 }
 
 Category::~Category()

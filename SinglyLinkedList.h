@@ -22,6 +22,7 @@ public:
 	T get(int index);
 	T operator[](int index);
 	void remove(int index);
+	void insert(T data, int index);
 	int search(T data);
 	int getSize();
 	void printAll();
@@ -111,6 +112,38 @@ void SinglyLinkedList<T>::add(T data)
 			node->next = nullptr;
 			this->last->next = node;
 			this->last = node;
+			this->size++;
+		}
+	}
+}
+
+template<class T>
+inline void SinglyLinkedList<T>::insert(T data, int index)
+{
+	if (index > this->size || index < 0) {
+		return;
+	}
+	else if (index == this->size) {
+		this->add(data);
+	}
+	else if (index < this->size) {
+		if (index == 0) {
+			// insert at first
+			Node<T> * node = new Node<T>();
+			node->data = data;
+			node->next = this->first;
+			this->first = node;
+			this->size++;
+		}
+		else {
+			Node<T> * current = this->first;
+			for (int i = 0; i < index - 1; i++) {
+				current = current->next;
+			}
+			Node<T> * node = new Node<T>();
+			node->data = data;
+			node->next = current->next;
+			current->next = node;
 			this->size++;
 		}
 	}

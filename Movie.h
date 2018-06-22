@@ -9,6 +9,7 @@ public:
 	string getName();
 	string getRating();
 	string getCategory();
+	void edit(string name, int year, string category, string rating, int ranking);
 	int getYear();
 	int getRanking();
 

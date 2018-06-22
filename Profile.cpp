@@ -69,7 +69,56 @@ void Profile::addCategories(SinglyLinkedList<Category*> * categories)
 void Profile::displayMovieQueue(int option)
 {
 	if (option == 1) {
+		// fetch all movies
+		SinglyLinkedList<Movie> allMovies = SinglyLinkedList<Movie>();
+		for (int i = 0; i < this->categories.getSize(); i++) {
+			for (int j = 0; j < this->categories.get(i)->movies.getSize(); j++) {
+				Movie tempMovie = this->categories.get(i)->movies.get(j);
+				allMovies.add(Movie(tempMovie.getName(), tempMovie.getYear(), tempMovie.getCategory(), tempMovie.getRating(), tempMovie.getRanking()));
+			}
+		}
 
+		cout << "sz: " << allMovies.getSize();
+
+		// sort all movies by ranking from highest to lowest (insertion sort)
+		for (int i = 1; i < allMovies.getSize(); i++) {
+			Movie movie = allMovies[i];
+			int j = i - 1;
+			cout << "\n ranks: " << allMovies[j].getRanking() << " " << movie.getRanking() << endl;
+			while (j >= 0 && allMovies[j].getRanking() < movie.getRanking()) {
+				Movie tempMovie = allMovies[j];
+				cout << tempMovie.getName() << " " << tempMovie.getYear() << endl;
+				cout << allMovies[j + 1].getName() << " " << allMovies[j + 1].getYear() << endl;
+				//allMovies[j + 1].edit(&tempMovie.getName(), &tempMovie.getYear(), &tempMovie.getCategory(), &tempMovie.getRating(), &tempMovie.getRanking());
+				//allMovies[j + 1] = Movie(tempMovie);
+				allMovies.remove(j + 1);
+				allMovies.insert(tempMovie, j + 1);
+				cout << allMovies[j + 1].getName() << " " << allMovies[j + 1].getYear() << endl;
+				j--;
+			}
+			cout << allMovies[0].getName() << " " << allMovies[0].getYear() << endl;
+			allMovies.remove(j + 1);
+			allMovies.insert(movie, j + 1);
+			//allMovies[j + 1] = Movie(movie);
+			//allMovies[j + 1].edit(movie.getName(), movie.getYear(), movie.getCategory(), movie.getRating(), movie.getRanking());
+		}
+
+		cout << "sz: " << allMovies.getSize()<<endl;
+
+		// display all movies
+		for (int i = 0; i < allMovies.getSize(); i++) {
+			Movie movie = allMovies[i];
+			cout << "\n----------------------------\n";
+			cout << movie.getName() << endl;
+			cout << "Year : " << movie.getYear() << endl;
+			cout << "Category : " << movie.getCategory() << endl;
+			cout << "Rated : " << movie.getRating() << endl;
+			cout << "Ranked : ";
+			for (int k = 0; k < movie.getRanking(); k++) {
+				cout << "*";
+			}cout << endl;
+		}
+		cout << "----------------------------\n";
 	}
 	else if (option == 2) {
 
@@ -81,9 +130,6 @@ void Profile::displayMovieQueue(int option)
 
 	}
 	else if (option == 5) {
-
-	}
-	else if (option == 6) {
 
 	}
 

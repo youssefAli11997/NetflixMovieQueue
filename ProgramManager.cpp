@@ -222,5 +222,11 @@ void ProgramManager::displayOptionsMenu()
 	cout << "6. Exit Display Menu\n\n";
 	int option;
 	cout << "Enter option: "; cin >> option;
-	this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);
+	if (option == 6) {
+		this->isDisplayOptionsMenu = false;
+		this->isProfileMenu = true;
+	}
+	else {
+		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);
+	}
 }
