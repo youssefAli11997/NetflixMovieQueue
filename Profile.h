@@ -18,6 +18,7 @@ public:
 	SinglyLinkedList<Category*> getCategories();
 	void addCategories(SinglyLinkedList<Category*> * categories);
 	void displayMovieQueue(int option);
+	void displayMovieQueue(int option, string value);
 	void addMovieToQueue(Movie* movie);
 	void editMovieInQueue(pair<int, int> pos, Movie * movie);
 	void removeMovieFromQueue(pair<int,int> pos);

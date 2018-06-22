@@ -222,7 +222,20 @@ void ProgramManager::displayOptionsMenu()
 	cout << "6. Exit Display Menu\n\n";
 	int option;
 	cout << "Enter option: "; cin >> option;
-	if (option == 6) {
+	if (option == 3) {
+		string rating;
+		cout << "Enter Rating: "; cin >> rating;
+		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option, rating);
+	}
+	else if (option == 4) {
+		string category;
+		cout << "Enter Category: "; cin >> category;
+		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option, category);
+	}
+	else if (option == 5) {
+		this->profiles.get(this->currentProfileIndex)->displayMovieQueue(option);
+	}
+	else if (option == 6) {
 		this->isDisplayOptionsMenu = false;
 		this->isProfileMenu = true;
 	}
